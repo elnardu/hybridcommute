@@ -42,9 +42,9 @@ def processNodes(nodes, typeValue):
 def loadNodes(col, nodes, key, value, typeValue):
     try:
         res = col.insert_many(processNodes(getNodesByKV(nodes, key, value), typeValue))
+        print(typeValue, len(res.inserted_ids))
     except Exception as bwe:
         print(bwe.details)
-    print(typeValue, len(res.inserted_ids))
 
 f = soup.find_all(matchNodesWithTag)
 loadNodes(col, f, 'amenity', 'parking', 'car_parking')
