@@ -49,3 +49,4 @@ def loadNodes(col, nodes, key, value, typeValue):
 f = soup.find_all(matchNodesWithTag)
 loadNodes(col, f, 'amenity', 'parking', 'car_parking')
 loadNodes(col, f, 'amenity', 'bicycle_rental', 'bicycle_rental')
+loadNodes(col, f, 'station', 'subway', 'subway')
