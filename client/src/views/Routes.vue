@@ -3,6 +3,7 @@
     <div v-if="!loaded" class="row justify-content-center">
       <h1>Loading...</h1>
     </div>
+    <router-link v-if="loaded" class="btn btn-outline-secondary mt-2" to="/">Back</router-link>
     <Route v-if="loaded" v-for="(r, i) in routes" :data="r[0]" :key="i" :num="i"/>
   </div>
 </template>
@@ -37,7 +38,7 @@ export default {
           lat: this.$route.params.fLat,
           lon: this.$route.params.fLon
         },
-        reversed: this.$route.params.s
+        reversed: this.$route.params.s === 0 ? false : true
       }).then((data) => {
         console.log(data)
         this.routes = data.data[2]

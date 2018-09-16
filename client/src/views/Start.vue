@@ -1,10 +1,10 @@
 <template>
     <div class="container-fluid">
-        <div class="row">
+        <div class="row mt-3">
             <div class="col">
                 <h3>From</h3>
                 <GmapMap
-                    :center="{lng:-71.0986966, lat:42.3585646}"
+                    :center="from.position"
                     :zoom="13"
                     map-type-id="terrain"
                     style="width: 100%; height: calc(60vh)"
@@ -16,11 +16,20 @@
                         @dragend="fromMarkerDrag"
                     />
                 </GmapMap>
+                <div class="input-group mt-2">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text">Search</span>
+                  </div>
+                  <gmap-autocomplete
+                    class="form-control"
+                    @place_changed="setPlaceFrom">
+                  </gmap-autocomplete>
+                </div>
             </div>
             <div class="col">
                 <h3>To</h3>
                 <GmapMap
-                    :center="{lng:-71.0986966, lat:42.3585646}"
+                    :center="to.position"
                     :zoom="13"
                     map-type-id="terrain"
                     style="width: 100%; height: calc(60vh)"
@@ -32,6 +41,15 @@
                         @dragend="toMarkerDrag"
                     />
                 </GmapMap>
+                <div class="input-group mt-2">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text">Search</span>
+                  </div>
+                  <gmap-autocomplete
+                    class="form-control"
+                    @place_changed="setPlaceTo">
+                  </gmap-autocomplete>
+                </div>
             </div>
         </div>
         <div class="row justify-content-center mt-3">
@@ -39,7 +57,7 @@
             <option selected value="0">Driving, transit, walking</option>
             <option value="1">Walking, transit, driving</option>
           </select>
-          <button class="btn btn-outline-primary" @click="go">Go on a trip</button>
+          <button class="btn btn-outline-primary" @click="go">Go on a trip!</button>
         </div>
 
     </div>
@@ -73,6 +91,14 @@ export default {
     toMarkerDrag(e) {
       this.to.position.lat = e.latLng.lat()
       this.to.position.lng = e.latLng.lng()
+    },
+    setPlaceFrom(place) {
+      this.from.position.lat = place.geometry.location.lat();
+      this.from.position.lng = place.geometry.location.lng();
+    },
+    setPlaceTo(place) {
+      this.to.position.lat = place.geometry.location.lat();
+      this.to.position.lng = place.geometry.location.lng();
     },
     go() {
       this.$router.push({

@@ -1,5 +1,5 @@
 <template>
-  <div class="row my-2">
+  <div class="row py-2 border-bottom">
     <div class="col p-3">
       <h2>Step {{num+1}}</h2>
       <p>

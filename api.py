@@ -40,31 +40,32 @@ def getNearestRoute():
 @app.route("/api/calc", methods=['POST'])
 def calcRoute():
     req = request.get_json()
+    print(req)
     try:
         res = calc(
-            {
-                'lat': float(req['from']['lat']),
-                'lng': float(req['from']['lon'])
-            },
             {
                 'lat': float(req['to']['lat']),
                 'lng': float(req['to']['lon'])
             },
+            {
+                'lat': float(req['from']['lat']),
+                'lng': float(req['from']['lon'])
+            },
             subway=False,
-            reverse=bool(req['reversed'])
+            reverse=req['reversed']
         )
     except Exception:
         res = calc(
             {
-                'lat': float(req['from']['lat']),
-                'lng': float(req['from']['lon'])
-            },
-            {
                 'lat': float(req['to']['lat']),
                 'lng': float(req['to']['lon'])
             },
+            {
+                'lat': float(req['from']['lat']),
+                'lng': float(req['from']['lon'])
+            },
             subway=True,
-            reverse=bool(req['reversed'])
+            reverse=req['reversed']
         )
 
     return Response(response=json.dumps(res),
