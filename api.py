@@ -5,12 +5,12 @@ from mixed_mobility import calc
 
 from flask import Flask, jsonify, request, Response
 from flask_cors import CORS
-app = Flask(__name__)
+app = Flask(__name__, static_folder="./client/dist/", static_url_path="")
 CORS(app)
 
 @app.route("/")
-def hello():
-    return "Hello World!"
+def index():
+    return app.send_file("./client/dist/index.html")
 
 @app.route("/api/getInRange", methods=['POST'])
 def getInRangeRoute():
